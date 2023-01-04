@@ -3,7 +3,7 @@ on:
   pull_request_target:
     types:
       - closed
-    branches: [dev]
+    branches: [staging]
 
 jobs:
   if_merged:
@@ -26,7 +26,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: tibildocker/spec-ms:1
+        tags: tibildocker/spec_ms:2
 
     - name: Docker pull image and deploy from hub
       env:
@@ -35,14 +35,14 @@ jobs:
         REPO: spec-ms
       uses: appleboy/ssh-action@master
       with:
-        HOST: ${{ secrets.HOST }}
+        HOST: ${{ secrets.QA_HOST }}
         USERNAME: ${{ secrets.USERNAME }}
         KEY: ${{ secrets.KEY }}
         PORT: '22'
         script: |
           docker login
-          docker pull tibildocker/spec-ms
-          docker stop cqube_v5_spec_app_1 || true
-          docker rm cqube_v5_spec_app_1 || true
-          docker rmi spec_ms:1 || true
-          docker run -d --name cqube_v5_spec_app_1 -p 3000:3000 --network cqube_v5_cqube_net tibildocker/spec-ms
+          docker pull tibildocker/spec_ms
+          docker stop cqube_v5_spec_app_2 || true
+          docker rm cqube_v5_spec_app_2 || true
+          docker rmi spec_ms:2 || true
+          docker run -d --name cqube_v5_spec_app_2 -p 3001:3001 --network cqube_v5_cqube_net tibildocker/spec_ms:2
