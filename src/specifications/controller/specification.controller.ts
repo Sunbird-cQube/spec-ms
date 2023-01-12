@@ -77,7 +77,7 @@ export class SpecificationController {
                 response.status(400).send({"message": result.error});
             }
             else {
-                response.status(200).send({"message": result.message, "responce": result.responce});
+                response.status(200).send({"message": result.message, "response": result.response});
             }
         } catch (error) {
             console.error("create.Transformer impl :", error)
