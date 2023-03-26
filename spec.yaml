@@ -950,49 +950,7 @@ paths:
           description: "Something went wrong"
           schema:
             $ref: "#/definitions/generic_error" 
-    put:
-      tags:
-        - "ingestion"
-      summary: "Update File status"
-      description: "Update File status"
-      operationId: "updateFileStatus"
-      produces:
-        - "application/json"
-      parameters:
-        - in: "body"
-          name: "body"
-          required: true
-          schema:
-            type: "object"
-            properties:
-              file_name:
-                type: "string"
-                example: "event_students_attendance.csv"
-              ingestion_type:
-                type: "string"
-                example: "event"
-              ingestion_name:
-                type: "string"
-                example: "event_students_attendance"
-              status:
-                type: "string"
-                example: "Processing|Processing_students_attendance_compliance_by_school|Completed_students_attendance_compliance_by_school"
-      responses:
-        200:
-          description: "File status updated successfully"
-          schema:
-            type: "object"
-            properties:
-              message:
-                type: "string"
-                example: "File status updated successfully"
-              ready_to_archive:
-                type: "boolean"
-                example: true
-        400:
-          description: "Something went wrong"
-          schema:
-            $ref: "#/definitions/generic_error"
+   
   /ingestion/national_programs:
     post:
       tags:

@@ -125,15 +125,10 @@ export const dimensionSchemaData = {
     "additionalProperties": false
 };
 
-export const eventSchemaData = {
+export const masterSchema = {
     "type": "object",
     "properties": {
-        "ingestion_type": {
-            "type": "string",
-            "pattern": "event",
-            "shouldnotnull": true
-        },
-        "event_name": {
+        "program": {
             "type": "string",
             "shouldnotnull": true
         },
@@ -149,10 +144,9 @@ export const eventSchemaData = {
                 "properties": {
                     "type": "object",
                     "shouldnotnull": true,
-                    "properties": {
-                        "event_name": {
+                    "patternProperties": {
+                        "^[a-zA-Z_]*$": {
                             "type": "object",
-                            "shouldnotnull": true,
                             "properties": {
                                 "type": {
                                     "type": "string",
@@ -160,81 +154,14 @@ export const eventSchemaData = {
                                     "shouldnotnull": true
                                 }
                             },
-                            "required": ["type"]
-                        },
-                        "event": {
-                            "type": "object",
-                            "shouldnotnull": true,
-                            "properties": {
-                                "type": {
-                                    "type": "string",
-                                    "pattern": "array",
-                                    "shouldnotnull": true
-                                },
-                                "items": {
-                                    "type": "object",
-                                    "shouldnotnull": true,
-                                    "properties": {
-                                        "type": {
-                                            "type": "string",
-                                            "enum": ["object"],
-                                            "shouldnotnull": true
-                                        },
-                                        "properties": {
-                                            "type": "object",
-                                            "shouldnotnull": true,
-                                            "patternProperties": {
-                                                "^[a-zA-Z_]*$": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "type": {
-                                                            "type": "string",
-                                                            "enum": ["string", "number", "boolean", "integer"],
-                                                            "shouldnotnull": true
-                                                        }
-                                                    },
-                                                    "required": ["type"],
-                                                    "shouldnotnull": true
-                                                }
-                                            }
-                                        },
-                                        "required": {
-                                            "type": "array",
-                                            "shouldnotnull": true
-                                        }
-                                    },
-                                    "required": ["type", "properties", "required"],
-                                    "additionalProperties": false
-                                },
-                                "required": {
-                                    "type": "array",
-                                    "shouldnotnull": false
-                                }
-                            },
-                            "required": ["type", "items"],
+                            "required": ["type", "unique"],
+                            "shouldnotnull": true
                         }
-                    },
-                    "required": ["event_name", "event"],
-                    "additionalProperties": false
-                },
-                "required": {
-                    "type": "array",
-                    "items": [{
-                        "shouldnotnull": true,
-                        "type": "string",
-                        "pattern": "event_name"
-                    }, {"shouldnotnull": true, "type": "string", "pattern": "event"}],
-                    "shouldnotnull": true,
-                    "minItems": 2,
-                    "additionalItems": false
+                    }
                 }
-            },
-            "required": ["type", "properties", "required"],
-            "additionalProperties": false
+            }
         }
-    },
-    "required": ["ingestion_type", "event_name", "input"],
-    "additionalProperties": false
+    }
 };
 
 export const transformerSchemaData = {

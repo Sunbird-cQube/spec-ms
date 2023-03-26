@@ -1,5 +1,5 @@
 export function checkName(coulmnName: string, tableName: string) {
-    const querStr = `SELECT ${coulmnName}, pid FROM spec.${tableName} WHERE ${coulmnName} = '$1'`;
+    const querStr = `SELECT ${coulmnName} FROM spec."${tableName}" WHERE ${coulmnName} = '$1'`;
     return querStr
 }
 
@@ -14,7 +14,7 @@ export function checkDuplicacy(columnNames: string[], tableName: string, JsonPro
 }
 
 export function insertSchema(columnNames: string[], tableName: string) {
-    const queryStr = `INSERT INTO spec.${tableName}(${columnNames[0]}, ${columnNames[1]}) VALUES ($1,$2) RETURNING pid`;
+    const queryStr = `INSERT INTO spec."${tableName}"(${columnNames[0]}, ${columnNames[1]}, ${columnNames[2]},${columnNames[3]},${columnNames[4]}) VALUES ($1,$2, $3,$4,$5) RETURNING *`;
     return queryStr;
 }
 
@@ -119,7 +119,7 @@ export function checkRecordExists(coulmnName: string, tableName: string) {
 }
 
 export function getGrammar(tableName, grammarName) {
-    const querStr = `SELECT schema FROM spec."${tableName}" WHERE cname = $1`;
+    const querStr = `SELECT schema FROM spec."${tableName}" WHERE program = $1`;
     return {query: querStr, values: [grammarName]};
 }
 
