@@ -84,7 +84,7 @@ export class Result {
 
 export class scheduleDto {
     @ApiProperty()
-    pipeline_name?: string;
+    processor_group_name?: string;
     @ApiProperty()
     scheduled_at?: string;
 }
