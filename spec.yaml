@@ -29,72 +29,54 @@ paths:
           required: true
           schema:
             example:
-              {
-    "ingestion_type": "event",
-    "event_name": "students_attendance",
-    "input": {
-        "type": "object",
-        "properties": {
-            "event_name": {
-                "type": "string"
-            },
-            "event": {
-                "type": "array",
-                "items": {
-                    "type": "object",
-                    "properties": {
-                        "date": {
-                            "type": "string",
-                            "shouldnotnull": true,
-                            "format": "date"
-                        },
-                        "school_id": {
-                            "type": "number",
-                            "shouldnotnull": true,
-                            "minimum": 1000000000,
-                            "maximum": 9999999999
-                        },
-                        "grade": {
-                            "type": "number",
-                            "shouldnotnull": true,
-                            "minimum": 1,
-                            "maximum": 12
-                        },
-                        "gender": {
-                            "type": "string",
-                            "shouldnotnull": true
-                        },
-                        "total_students": {
-                            "type": "number",
-                            "shouldnotnull": true
-                        },
-                        "students_attendance_marked": {
-                            "type": "number",
-                            "shouldnotnull": true
-                        },
-                        "students_marked_present": {
-                            "type": "number",
-                            "shouldnotnull": true
-                        }
-                    },
-                    "required": [
-                        "date",
-                        "school_id",
-                        "grade",
-                        "gender",
-                        "total_students",
-                        "students_attendance_marked",
-                        "students_marked_present"
-                    ]
-                }
-            }
-        },
-        "required": [
-            "event_name",
-            "event"
-        ]
-    }
-}
+              program: student-attendance
+              input:
+                type: object
+                properties:
+                  date:
+                    type: string
+                    shouldNotNull: true
+                    format: date
+                  school_id:
+                    type: string
+                    shouldNotNull: true
+                  grade_id:
+                    type: string
+                    shouldNotNull: true
+                  district_id:
+                    type: string
+                    shouldNotNull: true
+                  block_id:
+                    type: string
+                    shouldNotNull: true
+                  cluster_id:
+                    type: string
+                    shouldNotNull: true
+                  schoolcategory_id:
+                    type: string
+                    shouldNotNull: true
+                  gender:
+                    type: string
+                    shouldNotNull: true
+                  students_attendance_marked:
+                    type: string
+                    shouldNotNull: true
+                  students_marked_present:
+                    type: string
+                    shouldNotNull: true
+                  total_students:
+                    type: string
+                    shouldNotNull: true
+                  teachers_marked:
+                    type: string
+                    shouldNotNull: true
+                  teachers_marked_present:
+                    type: string
+                    shouldNotNull: true
+                  total_teachers:
+                    type: string
+                    shouldNotNull: true
+
       responses:
         200:
           description: "Event Spec Created Successfully"
@@ -104,9 +86,6 @@ paths:
               message:
                 type: "string"
                 example: "Event Spec Created Successfully"
-              pid:
-                type: "integer"
-                example: 1
               event_name:
                 type: "string"
                 example: "students_attendance"
@@ -403,162 +382,13 @@ paths:
           description: "Something went wrong"
           schema:
             $ref: "#/definitions/generic_error"
-  /spec/transformer:
-    post:
-      tags:
-        - "spec"
-      summary: "Create a new transformer Specification"
-      description: "Add new transformer Specification"
-      operationId: "transformerSpecification"
-      produces:
-        - "application/json"
-      parameters:
-        - in: "body"
-          name: "body"
-          required: true
-          schema:
-            type: "object"
-            properties:
-              ingestion_name:
-                type: "string"
-                example: "students_attendance"
-              key_file:
-                type: "string"
-                example: "transformer_dataset_mapping.csv"
-              program:
-                type: "string"
-                example: "SAC"
-              operation:
-                type: "string"
-                example: "dimension/dataset"
-      responses:
-        200:
-          description: "Transformer Spec Created Successfully"
-          schema:
-            type: "object"
-            properties:
-              message:
-                type: "string"
-                example: "Transformer created successfully"
-              response:
-                type: "array"
-                items:
-                  type: "object"
-                  properties: 
-                    pid: 
-                      type: "number"
-                      example: 1
-                    
-                    file: 
-                      type: "string"
-                      example: SAC_students_attendance_compliance_by_school.py
-                    
-                  
-              
-        400:
-          description: "Something went wrong"
-          schema:
-            $ref: "#/definitions/generic_error"
-  /spec/pipeline:
-    post:
-      tags:
-        - "spec"
-      summary: "Create a new pipeline Specification"
-      description: "Add new pipeline Specification"
-      operationId: "pipelineSpecification"
-      produces:
-        - "application/json"
-      parameters:
-        - in: "body"
-          name: "body"
-          required: true
-          schema:
-            type: "object"
-            properties:
-              pipeline_name:
-                type: "string"
-                example: "students_attendance_compliance_by_school"
-              pipeline_type:
-                type: "string"
-                example: "ingest_to_db/dimension_to_db/dataset_to_db"
-              pipeline:
-                type: "array"
-                items:
-                  type: "object"
-                  properties:
-                    event_name:
-                      type: "string"
-                      example: "students_attendance"
-                    dataset_name:
-                      type: "string"
-                      example: "students_attendance_compliance_by_school"
-                    dimension_name:
-                      type: "string"
-                      example: "school_details"
-                    transformer_name:
-                      type: "string"
-                      example: "SAC_students_attendance_compliance_by_school.py"
-
-      responses:
-        200:
-          description: "Pipeline "
-          schema:
-            type: "object"
-            properties:
-              message:
-                type: "string"
-                example: "Processor group running successfully"
-             
-                
-
-        400:
-          description: "Something went wrong"
-          schema:
-            $ref: "#/definitions/generic_error"
-            
-  /spec/s3:
-    post:
-      tags:
-        - "spec"
-      summary: "upload the files into s3"
-      description: "upload the files into s3"
-      operationId: "s3upload"
-      produces:
-        - "application/json"
-      parameters:
-        - in: "body"
-          name: "body"
-          required: true
-          schema:
-            type: "object"
-            properties:
-              scheduled_at:
-                type: "string"
-                example: "0 0/2 * 1/1 * ? *"
-              scheduled_type:
-                type: "string"
-                example: "Archive | Error"
-      responses:
-        200:
-          description: "uploadToArchiveS3 Processor group running successfully"
-          schema:
-            type: "object"
-            properties:
-              message:
-                type: "string"
-                example: "uploadToArchiveS3 Processor group running successfully"
-        400:
-          description: "Something went wrong"
-          schema:
-            $ref: "#/definitions/generic_error"
-
   /spec/schedule:
     post:
       tags:
         - "spec"
-      summary: "create a Schedule"
-      description: "Create a schedule"
-      operationId: "createSchedule"
+      summary: "Update a Schedule"
+      description: "Update a schedule"
+      operationId: "updateSchedule"
       produces:
         - "application/json"
       parameters:
@@ -568,26 +398,77 @@ paths:
           schema:
             type: "object"
             properties:
-              pipeline_name:
+              processor_group_name:
                 type: "string"
-                example: "student_count_pipe"
+                example: "Plugin Student Attendance aws"
               scheduled_at:
                 type: "string"
                 example: "0 0/1 * 1/1 * ? *"
-
       responses:
         200:
-          description: "student_count_pipe schedule created successfully"
+          description: "Successfully updated the schedule"
           schema:
             type: "object"
             properties:
               message:
                 type: "string"
-                example: "student_count_pipe has been successfully scheduled"
+                example: "Successfully updated the schedule"
         400:
           description: "Something went wrong"
           schema:
             $ref: "#/definitions/generic_error"
+  /spec/grammar:
+    get:
+      tags:
+        - "spec"
+      summary: ""
+      description: "Create a schedule"
+      operationId: "Get spec"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "query"
+          name: "grammar_type"
+          type: string
+          required: true
+        - in: "query"
+          name: "grammar_name"
+          type: string
+          required: true
+
+
+
+
+      responses:
+        200:
+          description: "Grammar"
+          schema:
+            type: object
+            example:
+              schema:
+                type: object
+                properties:
+                  date:
+                    type: string
+                    format: date
+                    unique: true
+                  school_id:
+                    type: string
+                    unique: true
+                  students_attendance_marked:
+                    type: integer
+                    unique: true
+
+
+
+
+
+
+        400:
+          description: "No records found"
+          schema:
+            $ref: "#/definitions/generic_error"
+
 
   /ingestion/event:
     post:
@@ -643,12 +524,6 @@ paths:
               message:
                 type: "string"
                 example: "Event Added Successfully"
-              invalid_record_count:
-                type: "integer"
-                example: 0
-              valid_record_count:
-                type: "integer"
-                example: 1
         400:
           description: "Something went wrong"
           schema:
@@ -725,12 +600,6 @@ paths:
               message:
                 type: "string"
                 example: "Dimension Added Successfully"
-              invalid_record_count:
-                type: "integer"
-                example: 0
-              valid_record_count:
-                type: "integer"
-                example: 1
         400:
           description: "Something went wrong"
           schema:
@@ -789,12 +658,6 @@ paths:
               message:
                 type: "string"
                 example: "Dataset Added Successfully"
-              invalid_record_count:
-                type: "integer"
-                example: 0
-              valid_record_count:
-                type: "integer"
-                example: 1
         400:
           description: "Something went wrong"
           schema:
@@ -831,7 +694,7 @@ paths:
           description: "Something went wrong"
           schema:
             $ref: "#/definitions/generic_error"
-  /ingestion/csv:
+  /ingestion/new_programs:
     post:
       tags:
         - "ingestion"
@@ -911,49 +774,71 @@ paths:
                     created_at:
                       type: "string"
                       example: "2023-01-27 18:18:08.007215"
+                    total_data_count:
+                      type: "integer"
+                      example: 2000
+                    processed_data_count:
+                      type: "integer"
+                      example: 1199
+                    error_data_count:
+                      type: "integer"
+                      example: 1
         400:
           description: "Something went wrong"
           schema:
-            $ref: "#/definitions/generic_error" 
-    put:
+            $ref: "#/definitions/generic_error"
+
+  /ingestion/national_programs:
+    post:
       tags:
         - "ingestion"
-      summary: "Update File status"
-      description: "Update File status"
-      operationId: "updateFileStatus"
+      summary: "CSV emission"
+      description: "CSV emission"
+      operationId: "emission"
+      consumes:
+        - "multipart/form-data"
       produces:
         - "application/json"
       parameters:
-        - in: "body"
+        - in: "formData"
           name: "body"
+          type: file
           required: true
-          schema:
-            type: "object"
-            properties:
-              file_name:
-                type: "string"
-                example: "event_students_attendance.csv"
-              ingestion_type:
-                type: "string"
-                example: "event"
-              ingestion_name:
-                type: "string"
-                example: "event_students_attendance"
-              status:
-                type: "string"
-                example: "Processing|Processing_students_attendance_compliance_by_school|Completed_students_attendance_compliance_by_school"
+
+
       responses:
         200:
-          description: "File status updated successfully"
+          description: "File uploaded successfully"
           schema:
             type: "object"
             properties:
               message:
                 type: "string"
-                example: "File status updated successfully"
-              ready_to_archive:
-                type: "boolean"
-                example: true
+                example: "File uploaded successfully"
+        400:
+          description: "Something went wrong"
+          schema:
+            $ref: "#/definitions/generic_error"
+  /ingestion/v4-data-emission:
+    get:
+      tags:
+        - "ingestion"
+      summary: "V4 data emission"
+      description: "V4 data emission"
+      operationId: "V4emission"
+      consumes:
+        - "multipart/form-data"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "Files uploaded successfully"
+          schema:
+            type: "object"
+            properties:
+              message:
+                type: "string"
+                example: "Files uploaded successfully"
         400:
           description: "Something went wrong"
           schema:
