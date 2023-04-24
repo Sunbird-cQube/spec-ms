@@ -132,8 +132,10 @@ export class ScheduleService {
         switch (processorGroupName) {
             case 'Plugin Student Attendance aws':
             case  'Plugin Teachers Attendance aws':
-            case 'Plugin Rev-and-monitor aws':
-                return 'Lists3';
+            case 'district-review-meetings-aws':
+            case 'cluster-review-meetings-aws':
+            case 'block-review-meetings-aws':
+                return 'Lists3';                                                                             
                 break;
             case 'Plugin Student Attendance local':
             case 'Plugin Teachers Attendance local':
@@ -149,6 +151,18 @@ export class ScheduleService {
             case 'Run Latest Code aws':
                 return 'ListS3Files';
                 break;
+            case 'district-review-meetings-local':
+                return 'Lists3_dist_rev_local';
+                break;
+            case 'cluster-review-meetings-local':
+                return 'Lists3_cluster_rev_local';
+                break;
+            case 'block-review-meetings-local':
+                return 'Lists3_block_rev_local';
+                break;
+            case 'Run Latest Code Oracle':
+                return 'GenerateFlowFile_oracle';
+                break;       
         }
     }
 }
