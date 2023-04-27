@@ -54,7 +54,7 @@ export class ScheduleService {
                     "disconnectedNodeAcknowledged": false
                 };
                 await this.http.put(`${this.nifiUrl}/nifi-api/flow/process-groups/${pg_source['component']['id']}`, data,);
-                let prdata =  this.getProcessorGroupPorts(pg_source['component']['id'])
+                let prdata = await this.getProcessorGroupPorts(pg_source['component']['id'])
                 let processor_id: any = '';
                 if(prdata)
                 {
