@@ -26,7 +26,7 @@ export class ScheduleService {
                 return {code: 400, error: result.errorMessage}
             } else {
                 let result = await this.CreateSchedule(scheduleData?.processor_group_name, scheduleData.scheduled_at);
-                if (result.code === 200) {
+                if (result?.code === 200) {
                     return {code: 200, "message": "Successfully updated the schedule"}
                 } else {
                     return {
@@ -54,6 +54,20 @@ export class ScheduleService {
                     "disconnectedNodeAcknowledged": false
                 };
                 await this.http.put(`${this.nifiUrl}/nifi-api/flow/process-groups/${pg_source['component']['id']}`, data,);
+                let prdata =  this.getProcessorGroupPorts(pg_source['component']['id'])
+                let processor_id: any = '';
+                if(prdata)
+                {
+                    for (let processor of prdata['processGroupFlow']['flow']['processors']) {
+                        if (processor.component.name == await this.getProcessorName(processorGroupName)) {
+                            processor_id = processor?.component?.id;
+                            break
+                        }
+
+                    }
+                    
+                }
+                await this.http.post(`${this.nifiUrl}/nifi-api/processors/${processor_id}/state/clear-requests`,'');
                 return await this.updateProcessorProperty(pg_source['component']['id'], processorGroupName, scheduledAt)
             }
         }
