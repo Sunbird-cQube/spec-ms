@@ -159,9 +159,11 @@ export const masterSchema = {
                         }
                     }
                 }
-            }
+            },
+            "required":["properties"]
         }
-    }
+    },
+    "required":["program"]
 };
 
 export const transformerSchemaData = {
