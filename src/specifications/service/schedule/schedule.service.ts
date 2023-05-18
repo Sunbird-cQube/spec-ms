@@ -1,10 +1,10 @@
-import {Injectable} from '@nestjs/common';
-import {InjectDataSource} from '@nestjs/typeorm';
-import {scheduleDto} from '../../dto/specData.dto';
-import {scheduleSchema} from '../../../utils/spec-data';
-import {DataSource} from 'typeorm';
-import {GenericFunction} from '../genericFunction';
-import {HttpCustomService} from "../HttpCustomService";
+import { Injectable } from '@nestjs/common';
+import { InjectDataSource } from '@nestjs/typeorm';
+import { scheduleDto } from '../../dto/specData.dto';
+import { scheduleSchema } from '../../../utils/spec-data';
+import { DataSource } from 'typeorm';
+import { GenericFunction } from '../genericFunction';
+import { HttpCustomService } from "../HttpCustomService";
 
 let cronValidator = require('cron-expression-validator');
 
@@ -19,15 +19,15 @@ export class ScheduleService {
         let isValidSchema: any;
         isValidSchema = await this.specService.ajvValidator(scheduleSchema, scheduleData);
         if (isValidSchema.errors) {
-            return {code: 400, error: isValidSchema.errors}
+            return { code: 400, error: isValidSchema.errors }
         } else {
-            let result = cronValidator.isValidCronExpression(scheduleData.scheduled_at, {error: true});
+            let result = cronValidator.isValidCronExpression(scheduleData.scheduled_at, { error: true });
             if (result.errorMessage) {
-                return {code: 400, error: result.errorMessage}
+                return { code: 400, error: result.errorMessage }
             } else {
                 let result = await this.CreateSchedule(scheduleData?.processor_group_name, scheduleData.scheduled_at);
                 if (result?.code === 200) {
-                    return {code: 200, "message": "Successfully updated the schedule"}
+                    return { code: 200, "message": "Successfully updated the schedule" }
                 } else {
                     return {
                         code: 400,
@@ -56,8 +56,7 @@ export class ScheduleService {
                 await this.http.put(`${this.nifiUrl}/nifi-api/flow/process-groups/${pg_source['component']['id']}`, data,);
                 let prdata = await this.getProcessorGroupPorts(pg_source['component']['id'])
                 let processor_id: any = '';
-                if(prdata)
-                {
+                if (prdata) {
                     for (let processor of prdata['processGroupFlow']['flow']['processors']) {
                         if (processor.component.name == await this.getProcessorName(processorGroupName)) {
                             processor_id = processor?.component?.id;
@@ -65,9 +64,9 @@ export class ScheduleService {
                         }
 
                     }
-                    
+
                 }
-                await this.http.post(`${this.nifiUrl}/nifi-api/processors/${processor_id}/state/clear-requests`,'');
+                await this.http.post(`${this.nifiUrl}/nifi-api/processors/${processor_id}/state/clear-requests`, '');
                 return await this.updateProcessorProperty(pg_source['component']['id'], processorGroupName, scheduledAt)
             }
         }
@@ -119,10 +118,10 @@ export class ScheduleService {
                                 message: `Successfully updated the properties in the ${processorGroupName}`
                             };
                         } else {
-                            return {code: 100, message: `Failed to update the properties in the ${processorGroupName}`};
+                            return { code: 100, message: `Failed to update the properties in the ${processorGroupName}` };
                         }
                     } catch (error) {
-                        return {code: 400, error: "Could not update the processor"};
+                        return { code: 400, error: "Could not update the processor" };
                     }
                 }
             }
@@ -138,18 +137,18 @@ export class ScheduleService {
                 return res.data;
             }
         } catch (error) {
-            return {code: 400, error: "could not get Processor Group Port"}
+            return { code: 400, error: "could not get Processor Group Port" }
         }
     }
 
     async getProcessorName(processorGroupName) {
         switch (processorGroupName) {
             case 'Plugin Student Attendance aws':
-            case  'Plugin Teachers Attendance aws':
+            case 'Plugin Teachers Attendance aws':
             case 'district-review-meetings-aws':
             case 'cluster-review-meetings-aws':
             case 'block-review-meetings-aws':
-                return 'Lists3';                                                                             
+                return 'Lists3';
                 break;
             case 'Plugin Student Attendance local':
             case 'Plugin Teachers Attendance local':
@@ -160,6 +159,16 @@ export class ScheduleService {
                 return 'GenerateFlowFile_adapter';
                 break;
             case 'Run Latest Code local':
+            case 'school_Infrastructure_local':
+            case 'student_progression_local':
+            case 'school_attendance_local':
+            case 'student_assessment_local':
+            case 'pm_poshan_local':
+            case 'diksha_local':
+            case 'nas_local':
+            case 'udise_local':
+            case 'pgi_local':
+            case 'nishtha_local':
                 return 'Listlocal';
                 break;
             case 'Run Latest Code aws':
@@ -176,7 +185,7 @@ export class ScheduleService {
                 break;
             case 'Run Latest Code Oracle':
                 return 'GenerateFlowFile_oracle';
-                break;       
+                break;
         }
     }
 }
