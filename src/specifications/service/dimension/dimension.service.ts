@@ -1,5 +1,5 @@
 import {GenericFunction} from './../genericFunction';
-import {checkDuplicacy, checkName, createTable, insertPipeline, insertSchema} from '../../queries/queries';
+import {checkDimensionName, checkDuplicacy, checkName, createTable, insertDimensionSchema, insertPipeline, insertSchema} from '../../queries/queries';
 import {DataSource} from 'typeorm';
 import {InjectDataSource} from '@nestjs/typeorm';
 import {dimensionSchemaData, masterSchema} from "../../../utils/spec-data";
@@ -10,30 +10,28 @@ export class DimensionService {
     }
 
     async createDimension(dimensionDTO) {
-        let newObj = this.specService.convertKeysToLowerCase(dimensionDTO);
-        const isValidSchema: any = await this.specService.ajvValidator(masterSchema, newObj);
+        const isValidSchema: any = await this.specService.ajvValidator(masterSchema, dimensionDTO);
         if (isValidSchema?.errors) {
             return {"code": 400, error: isValidSchema.errors}
         } else {
-                let queryResult: any = checkName('program', "DimensionGrammar");
-                queryResult = queryResult.replace('$1', `${dimensionDTO?.program.toLowerCase()}`);
+                let queryResult: any = checkDimensionName('name', "DimensionGrammar");
+                queryResult = queryResult.replace('$1', `${dimensionDTO?.program}`);
                 const resultDname = await this.dataSource.query(queryResult);
                 if (resultDname?.length > 0) {
-                    return {"code": 400, "error": "Dimension name already exists"};
+                    return {"code": 400, "error": "Dimension spec already exists"};
                 }
                 else {
                     const queryRunner = this.dataSource.createQueryRunner();
                         try {
                             await queryRunner.connect();
                             await queryRunner.startTransaction();
-                            let insertQuery = insertSchema(['program', 'schema', '"eventType"', 'name', '"updatedAt"'], 'DimensionGrammar');
-                            insertQuery = insertQuery.replace('$1', `'${dimensionDTO.program.toLowerCase()}'`);
-                            insertQuery = insertQuery.replace('$2', `'${JSON.stringify(newObj)}'`);
-                            insertQuery = insertQuery.replace('$3', `'EXTERNAL'`);
-                            insertQuery = insertQuery.replace('$4', `'${dimensionDTO.program.toLowerCase()}'`);
-                            insertQuery = insertQuery.replace('$5', 'CURRENT_TIMESTAMP');
+                            let insertQuery = insertDimensionSchema(['schema', '"dimensionType"', 'name', '"updatedAt"'], 'DimensionGrammar');
+                            insertQuery = insertQuery.replace('$1', `'${JSON.stringify(dimensionDTO.input)}'`);
+                            insertQuery = insertQuery.replace('$2', `'EXTERNAL'`);
+                            insertQuery = insertQuery.replace('$3', `'${dimensionDTO.program}'`);
+                            insertQuery = insertQuery.replace('$4', 'CURRENT_TIMESTAMP');
                             const insertResult = await queryRunner.query(insertQuery);
-                            if (insertResult[0].pid) {
+                            if (insertResult[0].id) {
                                     await queryRunner.commitTransaction();
                                     return {
                                         "code": 200,
@@ -46,8 +44,9 @@ export class DimensionService {
                                 return {"code": 400, "error": "Unable to insert into spec table"};
                             }
                         } catch (error) {
+                            console.log(error)
                             await queryRunner.rollbackTransaction();
-                            return {"code": 400, "error": "Something went wrong"}
+                            return {"code": 400, "error": "Something went wrong", "errObj": error}
                         }
                         finally {
                             await queryRunner.release();
