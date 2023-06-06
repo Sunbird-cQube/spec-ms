@@ -3,6 +3,11 @@ export function checkName(coulmnName: string, tableName: string) {
     return querStr
 }
 
+export function checkDimensionName(coulmnName: string, tableName: string) {
+    const querStr = `SELECT ${coulmnName} FROM spec."${tableName}" WHERE ${coulmnName} = '$1' AND "dimensionType" = 'EXTERNAL'`;
+    return querStr
+}
+
 export function checkPipelineName(coulmnName: string, tableName: string){
     const querStr = `SELECT ${coulmnName}, pid FROM transformers.${tableName} WHERE ${coulmnName} = '$1'`;
     return querStr 
@@ -15,6 +20,11 @@ export function checkDuplicacy(columnNames: string[], tableName: string, JsonPro
 
 export function insertSchema(columnNames: string[], tableName: string) {
     const queryStr = `INSERT INTO spec."${tableName}"(${columnNames[0]}, ${columnNames[1]}, ${columnNames[2]},${columnNames[3]},${columnNames[4]}) VALUES ($1,$2, $3,$4,$5) RETURNING *`;
+    return queryStr;
+}
+
+export function insertDimensionSchema(columnNames: string[], tableName: string) {
+    const queryStr = `INSERT INTO spec."${tableName}"(${columnNames[0]}, ${columnNames[1]}, ${columnNames[2]},${columnNames[3]}) VALUES ($1,$2, $3,$4) RETURNING *`;
     return queryStr;
 }
 
