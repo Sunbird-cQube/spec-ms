@@ -36,7 +36,7 @@ export class DimensionService {
                                     return {
                                         "code": 200,
                                         "message": "Dimension spec created successfully",
-                                        "program": dimensionDTO.dimension_name,
+                                        "program": dimensionDTO?.program,
                                     };
                                 
                             } else {
