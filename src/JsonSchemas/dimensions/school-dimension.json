@@ -17,7 +17,15 @@
             },
             "schoolcategory_id":{
                 "type": "string",
-                "shouldNotNull": true
+                "shouldNotNull": false
+            },
+             "schoolmanagement_id":{
+                "type": "string",
+                "shouldNotNull": false
+            },
+            "school_statecategory_id":{
+                "type": "string",
+                "shouldNotNull": false
             },
             "cluster_id":{
                 "type": "string",
@@ -56,7 +64,6 @@
             "school_id",
             "udise_code",
             "school_name",
-            "schoolcategory_id",
             "cluster_id",
             "cluster_name",
             "block_id",
