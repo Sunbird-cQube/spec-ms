@@ -13,13 +13,12 @@
             },
              "grades": {
                 "type": "string",
-                "shouldnotnull": true
+                "shouldnotnull": false
             }      
         },
         "required": [
             "schoolcategory_id",
-            "schoolcategory_name",
-            "grades"
+            "schoolcategory_name"
         ]
     }
 }
