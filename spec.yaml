@@ -254,7 +254,32 @@ paths:
           schema:
             $ref: "#/definitions/generic_error"
 
-
+  /ingestion/generatejwt:
+    get:
+      tags:
+        - 'ingestion'
+      summary: 'Generate JWT'
+      description: 'Generate a JWT token'
+      produces:
+        - 'application/json'
+      responses:
+        200:
+          description: 'Token generated successfully'
+          schema:
+            type: 'object'
+            properties:
+              token:
+                type: 'string'
+                example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+        400:
+          description: 'Error generating token'
+          schema:
+            type: 'object'
+            properties:
+              error:
+                type: 'string'
+                example: 'Could not generate token'
+  
   /ingestion/event:
     post:
       tags:
