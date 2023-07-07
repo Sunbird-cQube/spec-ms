@@ -93,7 +93,79 @@ paths:
           description: "Something went wrong"
           schema:
             $ref: "#/definitions/generic_error"
- 
+  
+  /spec/dimension:
+    post:
+      tags:
+        - "spec"
+      summary: "Create a new dimension Specification"
+      description: "Add new dimension Specification"
+      operationId: "dimensionSpecification"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            example:
+              program: school
+              input:
+                type: object
+                properties:
+                  school_id:
+                    type: string
+                    shouldNotNull: true
+                  udise_code:
+                    type: string
+                    shouldNotNull: true
+                  school_name:
+                    type: string
+                    shouldNotNull: true
+                  schoolcategory_id:
+                    type: string
+                    shouldNotNull: true
+                  block_id:
+                    type: string
+                    shouldNotNull: true
+                  cluster_id:
+                    type: string
+                    shouldNotNull: true
+                  cluster_name:
+                    type: string
+                    shouldNotNull: true
+                  block_name:
+                    type: string
+                    shouldNotNull: true
+                  district_id:
+                    type: string
+                    shouldNotNull: true
+                  district_name:
+                    type: string
+                    shouldNotNull: true
+                  latitude:
+                    type: number
+                    shouldNotNull: false
+                  longitude:
+                    type: number
+                    shouldNotNull: false
+
+      responses:
+        200:
+          description: "Dimension Spec Created Successfully"
+          schema:
+            type: "object"
+            properties:
+              message:
+                type: "string"
+                example: "Dimension Spec Created Successfully"
+              dimension_name:
+                type: "string"
+                example: "school"
+        400:
+          description: "Something went wrong"
+          schema:
+            $ref: "#/definitions/generic_error"
   
   /spec/schedule:
     post:
