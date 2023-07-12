@@ -202,58 +202,143 @@ paths:
           description: "Something went wrong"
           schema:
             $ref: "#/definitions/generic_error"
-  /spec/grammar:
-    get:
-      tags:
-        - "spec"
-      summary: ""
-      description: "Create a schedule"
-      operationId: "Get spec"
-      produces:
-        - "application/json"
-      parameters:
-        - in: "query"
-          name: "grammar_type"
-          type: string
-          required: true
-        - in: "query"
-          name: "grammar_name"
-          type: string
-          required: true
 
 
 
-
-      responses:
-        200:
-          description: "Grammar"
-          schema:
-            type: object
-            example:
-              schema:
-                type: object
-                properties:
-                  date:
-                    type: string
-                    format: date
-                    unique: true
-                  school_id:
-                    type: string
-                    unique: true
-                  students_attendance_marked:
-                    type: integer
-                    unique: true
-
-
-
-
-
-
-        400:
-          description: "No records found"
-          schema:
-            $ref: "#/definitions/generic_error"
-
+  # /ingestion/event:
+  #   post:
+  #     tags:
+  #       - "ingestion"
+  #     summary: "Add Event into a CSV"
+  #     description: "Add event"
+  #     operationId: "addEvent"
+  #     produces:
+  #       - "application/json"
+  #     parameters:
+  #       - in: "body"
+  #         name: "body"
+  #         required: true
+  #         schema:
+  #           type: "object"
+  #           properties:
+  #             event_name:
+  #               type: "string"
+  #               example: "students_attendance"
+  #             event:
+  #               type: "array"
+  #               items:
+  #                 type: "object"
+  #                 properties:
+  #                   date:
+  #                     type: "string"
+  #                     example: "2022-06-12"
+  #                   school_id:
+  #                     type: "number"
+  #                     example: 1234567891
+  #                   grade:
+  #                     type: "number"
+  #                     example: 1
+  #                   gender:
+  #                     type: "string"
+  #                     example: "male"
+  #                   total_students:
+  #                     type: "number"
+  #                     example: 10
+  #                   students_attendance_marked:
+  #                     type: "number"
+  #                     example: 8
+  #                   students_attendance_present:
+  #                     type: "number"
+  #                     example: 2
+  #     responses:
+  #       200:
+  #         description: "Event Added Successfully"
+  #         schema:
+  #           type: "object"
+  #           properties:
+  #             message:
+  #               type: "string"
+  #               example: "Event Added Successfully"
+  #       400:
+  #         description: "Something went wrong"
+  #         schema:
+  #           $ref: "#/definitions/generic_error"
+  # /ingestion/dimension:
+  #   post:
+  #     tags:
+  #       - "ingestion"
+  #     summary: "Add dimension into CSV"
+  #     description: "Add dimension"
+  #     operationId: "addDimension"
+  #     produces:
+  #       - "application/json"
+  #     parameters:
+  #       - in: "body"
+  #         name: "body"
+  #         required: true
+  #         schema:
+  #           type: "object"
+  #           properties:
+  #             dimension_name:
+  #               type: "string"
+  #               example: "school_details"
+  #             dimension:
+  #               type: "array"
+  #               items:
+  #                 type: "object"
+  #                 properties:
+  #                   grade:
+  #                     type: "number"
+  #                     example: 1
+  #                   school_id:
+  #                     type: "number"
+  #                     example: 2402121120
+  #                   school_name:
+  #                     type: "string"
+  #                     example: "Tirthgam Pri. Sch"
+  #                   school_type:
+  #                     type: "string"
+  #                     example: "rural"
+  #                   school_category:
+  #                     type: "string"
+  #                     example: "primary"
+  #                   cluster_id:
+  #                     type: "number"
+  #                     example: 240212111
+  #                   cluster_name:
+  #                     type: "string"
+  #                     example: "Sapreda"
+  #                   block_id:
+  #                     type: "number"
+  #                     example: 24021
+  #                   block_name:
+  #                     type: "string"
+  #                     example: "Vav"
+  #                   district_id:
+  #                     type: "number"
+  #                     example: 240
+  #                   district_name:
+  #                     type: "string"
+  #                     example: "Banaskantha"
+  #                   state_id:
+  #                     type: "number"
+  #                     example: 1
+  #                   state_name:
+  #                     type: "string"
+  #                     example: "UP"
+  #     responses:
+  #       200:
+  #         description: "Dimension Added Successfully"
+  #         schema:
+  #           type: "object"
+  #           properties:
+  #             message:
+  #               type: "string"
+  #               example: "Dimension Added Successfully"
+  #       400:
+  #         description: "Something went wrong"
+  #         schema:
+  #           $ref: "#/definitions/generic_error"
   /ingestion/generatejwt:
     get:
       tags:
@@ -279,142 +364,7 @@ paths:
               error:
                 type: 'string'
                 example: 'Could not generate token'
-  
-  /ingestion/event:
-    post:
-      tags:
-        - "ingestion"
-      summary: "Add Event into a CSV"
-      description: "Add event"
-      operationId: "addEvent"
-      produces:
-        - "application/json"
-      parameters:
-        - in: "body"
-          name: "body"
-          required: true
-          schema:
-            type: "object"
-            properties:
-              event_name:
-                type: "string"
-                example: "students_attendance"
-              event:
-                type: "array"
-                items:
-                  type: "object"
-                  properties:
-                    date:
-                      type: "string"
-                      example: "2022-06-12"
-                    school_id:
-                      type: "number"
-                      example: 1234567891
-                    grade:
-                      type: "number"
-                      example: 1
-                    gender:
-                      type: "string"
-                      example: "male"
-                    total_students:
-                      type: "number"
-                      example: 10
-                    students_attendance_marked:
-                      type: "number"
-                      example: 8
-                    students_attendance_present:
-                      type: "number"
-                      example: 2
-      responses:
-        200:
-          description: "Event Added Successfully"
-          schema:
-            type: "object"
-            properties:
-              message:
-                type: "string"
-                example: "Event Added Successfully"
-        400:
-          description: "Something went wrong"
-          schema:
-            $ref: "#/definitions/generic_error"
-  /ingestion/dimension:
-    post:
-      tags:
-        - "ingestion"
-      summary: "Add dimension into CSV"
-      description: "Add dimension"
-      operationId: "addDimension"
-      produces:
-        - "application/json"
-      parameters:
-        - in: "body"
-          name: "body"
-          required: true
-          schema:
-            type: "object"
-            properties:
-              dimension_name:
-                type: "string"
-                example: "school_details"
-              dimension:
-                type: "array"
-                items:
-                  type: "object"
-                  properties:
-                    grade:
-                      type: "number"
-                      example: 1
-                    school_id:
-                      type: "number"
-                      example: 2402121120
-                    school_name:
-                      type: "string"
-                      example: "Tirthgam Pri. Sch"
-                    school_type:
-                      type: "string"
-                      example: "rural"
-                    school_category:
-                      type: "string"
-                      example: "primary"
-                    cluster_id:
-                      type: "number"
-                      example: 240212111
-                    cluster_name:
-                      type: "string"
-                      example: "Sapreda"
-                    block_id:
-                      type: "number"
-                      example: 24021
-                    block_name:
-                      type: "string"
-                      example: "Vav"
-                    district_id:
-                      type: "number"
-                      example: 240
-                    district_name:
-                      type: "string"
-                      example: "Banaskantha"
-                    state_id:
-                      type: "number"
-                      example: 1
-                    state_name:
-                      type: "string"
-                      example: "UP"
-      responses:
-        200:
-          description: "Dimension Added Successfully"
-          schema:
-            type: "object"
-            properties:
-              message:
-                type: "string"
-                example: "Dimension Added Successfully"
-        400:
-          description: "Something went wrong"
-          schema:
-            $ref: "#/definitions/generic_error"
-    
+                 
   /ingestion/new_programs:
     post:
       tags:
@@ -540,30 +490,7 @@ paths:
           description: "Something went wrong"
           schema:
             $ref: "#/definitions/generic_error"
-  /ingestion/v4-data-emission:
-    get:
-      tags:
-        - "ingestion"
-      summary: "V4 data emission"
-      description: "V4 data emission"
-      operationId: "V4emission"
-      consumes:
-        - "multipart/form-data"
-      produces:
-        - "application/json"
-      responses:
-        200:
-          description: "Files uploaded successfully"
-          schema:
-            type: "object"
-            properties:
-              message:
-                type: "string"
-                example: "Files uploaded successfully"
-        400:
-          description: "Something went wrong"
-          schema:
-            $ref: "#/definitions/generic_error"
+  
 
 definitions:
   generic_error:
