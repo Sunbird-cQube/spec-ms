@@ -7,7 +7,6 @@ basePath: "/v0"
 
 tags:
   - name: "spec"
-  - name: "ingestion"
 
 schemes:
   - "https"
