@@ -16,14 +16,14 @@ import {
 import {DatasetService} from '../service/dataset/dataset.service';
 import {ScheduleService} from '../service/schedule/schedule.service';
 import {ApiTags} from '@nestjs/swagger';
-import {S3Service} from '../service/s3/s3.service';
 import {Grammar} from '../service/grammar/grammar.service';
+import { ReadSchemaService } from '../service/read-schema/read-schema.service';
 
 @ApiTags('spec-ms')
 @Controller('')
 export class SpecificationController {
     constructor(private dimensionService: DimensionService, private EventService: EventService, private datasetService: DatasetService,
-                private scheduleService: ScheduleService, private s3service: S3Service, private grammar: Grammar, private pipelineService: PipelineService) {
+                private scheduleService: ScheduleService, private readJsonFiles: ReadSchemaService, private grammar: Grammar, private pipelineService: PipelineService) {
     }
 
     @Get('/hello')
@@ -102,10 +102,10 @@ export class SpecificationController {
         }
     }
 
-    @Post('/s3')
-    async uploadToS3(@Body() scheduleTime: s3DTO, @Res()response: Response) {
+    @Get('/readjsonFiles')
+    async readSchemaFiles( @Res()response: Response) {
         try {
-            let result: any = await this.s3service.uploadFile(scheduleTime);
+            let result: any = await this.readJsonFiles.insertSpecs()
             if (result.code == 400) {
                 response.status(400).send({"message": result.error});
             } else {

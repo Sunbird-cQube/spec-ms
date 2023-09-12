@@ -143,54 +143,36 @@ export class ScheduleService {
 
     async getProcessorName(processorGroupName) {
         switch (processorGroupName) {
-            case 'Plugin Student Attendance aws':
-            case 'Plugin Teachers Attendance aws':
-            case 'district-review-meetings-aws':
-            case 'cluster-review-meetings-aws':
-            case 'block-review-meetings-aws':
-                return 'Lists3';
-                break;
-            case 'Plugin Student Attendance local':
-            case 'Plugin Teachers Attendance local':
-            case 'Plugin Rev-and-monitor local':
-                return 'Lists3_local';
-                break;
-            case 'Run_adapters':
-                return 'GenerateFlowFile_adapter';
-                break;
-            case 'Run Latest Code local':
-            case 'school_Infrastructure_local':
-            case 'student_progression_local':
-            case 'school_attendance_local':
-            case 'student_assessment_local':
-            case 'pm_poshan_local':
-            case 'diksha_local':
-            case 'nas_local':
-            case 'udise_local':
-            case 'pgi_local':
-            case 'nishtha_local':
-                return 'Listlocal';
-                break;
-            case 'Run Latest Code aws':
-                return 'ListS3Files';
-                break;
-            case 'district-review-meetings-local':
-                return 'Lists3_dist_rev_local';
-                break;
-            case 'cluster-review-meetings-local':
-                return 'Lists3_cluster_rev_local';
-                break;
-            case 'block-review-meetings-local':
-                return 'Lists3_block_rev_local';
-                break;
-            case 'Run Latest Code Oracle':
-                return 'GenerateFlowFile_oracle';
-                break;
-            case 'Run Latest Code azure':
-                return 'ListAzure';
-            default:
-                return 'default processor_group'                
-            
+            case 'Run_adapters': 
+                return 'GenerateFlowFile_adapter';  
+            case 'ingest_dimension_grammar': 
+            case 'ingest_dimension_data': 
+            case 'ingest_all_data':             
+            case 'ingest_programwise_data': 
+            case 'ingest_dimension_data': 
+                return 'ExecuteProcess';  
+            case 'telemetry_data': 
+                return 'GenerateFlowFile';  
+            case 'data_moving_local': 
+            case 'school_Infrastructure_local': 
+            case 'student_progression_local': 
+            case 'school_attendance_local': 
+            case 'student_assessment_local': 
+            case 'pm_poshan_local': 
+            case 'diksha_local': 
+            case 'nas_local': 
+            case 'udise_local': 
+            case 'pgi_local': 
+            case 'nishtha_local': 
+                return 'Listlocal';  
+            case 'data_moving_aws': 
+                return 'ListS3Files';  
+            case 'data_moving_oracle': 
+            case 'ingest_event_grammar': 
+                return 'GenerateFlowFile_oracle';  
+            case 'data_moving_azure': 
+                return 'ListAzure'; 
+            default: return 'default processor_group'
         }
     }
-}
+    }

@@ -11,24 +11,24 @@
                 "type": "string",
                 "shouldNotNull": true
             },
-             "state_id": {
+            "state_id": {
                 "type": "string",
                 "shouldNotNull": true
             },
-             "state_name": {
+            "state_name": {
                 "type": "string",
                 "shouldNotNull": true
             },
-             "latitude": {
+            "latitude": {
                 "type": "number",
                 "shouldNotNull": false
             },
-             "longitude": {
+            "longitude": {
                 "type": "number",
                 "shouldNotNull": false
             }
         },
-        "required":[
+        "required": [
             "district_id",
             "district_name",
             "state_id",
