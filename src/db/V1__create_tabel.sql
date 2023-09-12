@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS emission."vsk_tracker" (
   updated_at           TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   program_name         VARCHAR NOT NULL,
   presignedurl         VARCHAR,
-  token                VARCHAR,
+  jwt_token            VARCHAR,
   file_status          VARCHAR
 
 );
