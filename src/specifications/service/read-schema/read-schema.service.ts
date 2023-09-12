@@ -14,7 +14,7 @@ export class ReadSchemaService {
         const folderPath = './src/JsonSchemas/dimensions'   
         const files = fs.readdirSync(folderPath);
         let promises = []
-        for (let i = 0; i < files.length; i++) {
+        for (let i = 0; i < files?.length; i++) {
             const data = fs.readFileSync(folderPath + '/' + files[i], 'utf-8')
             try {
                 const jsonData = JSON.parse(data);
