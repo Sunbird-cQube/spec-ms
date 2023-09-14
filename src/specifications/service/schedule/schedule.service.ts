@@ -166,6 +166,7 @@ export class ScheduleService {
             case 'nishtha_local': 
                 return 'Listlocal';  
             case 'data_moving_aws': 
+            case 'onestep_dataingestion_aws':
                 return 'ListS3Files';  
             case 'data_moving_oracle': 
             case 'ingest_event_grammar': 
