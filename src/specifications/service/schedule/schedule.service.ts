@@ -173,7 +173,19 @@ export class ScheduleService {
                 return 'GenerateFlowFile_oracle';  
             case 'data_moving_azure': 
                 return 'ListAzure'; 
-            default: return 'default processor_group'
+            case 'school_Infrastructure_aws':
+            case 'student_progression_aws':
+            case 'student_assessment_aws':
+            case 'school_attendance_aws':
+            case 'diksha_aws':
+            case 'pm_poshan_aws':
+            case 'udise_aws':
+            case 'nas_aws':
+            case 'nishtha_aws':
+            case 'pgi_aws':
+                return 'ListS3Files'
+            default: 
+                return 'default processor_group'
         }
     }
     }
