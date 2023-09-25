@@ -152,7 +152,7 @@ export class ScheduleService {
             case 'ingest_dimension_data': 
                 return 'ExecuteProcess';  
             case 'telemetry_data': 
-                return 'GenerateFlowFile';  
+                return 'GenerateFlowFile_telemetry';  
             case 'data_moving_local': 
             case 'school_Infrastructure_local': 
             case 'student_progression_local': 
