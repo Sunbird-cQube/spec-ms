@@ -336,6 +336,17 @@ export class ScheduleService {
       case "nishtha_aws":
       case "pgi_aws":
         return "ListS3Files";
+      case "school_Infrastructure_oracle":
+      case "student_progression_oracle":
+      case "student_assessment_oracle":
+      case "school_attendance_oracle":
+      case "diksha_oracle":
+      case "pm_poshan_oracle":
+      case "udise_oracle":
+      case "nas_oracle":
+      case "nishtha_oracle":
+      case "pgi_oracle":
+        return "GenerateFlowFile_oracle";
       default:
         return "default processor_group";
     }
