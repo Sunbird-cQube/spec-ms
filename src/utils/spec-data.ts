@@ -927,6 +927,10 @@ export const scheduleSchema = {
         "scheduled_at": {
             "type": "string",
             "shouldnotnull": true
+        },
+        "program_name": {
+            "type": "string",
+            "shouldnotnull": true
         }
     },
     "required": [
