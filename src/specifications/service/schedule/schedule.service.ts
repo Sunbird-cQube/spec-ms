@@ -156,7 +156,7 @@ export class ScheduleService {
       let processors: any[] =
         pg_ports["processGroupFlow"]["flow"]["processors"];
       for (let [index, processor] of processors.entries()) {
-        if (processor.component.name == "run_yarn_cli") {
+        if (processor.component.name == "run_generic_yarn_cli") {
           console.log("inside of run yarn cli");
           update_processor_property_body = {
             component: {
@@ -298,7 +298,7 @@ export class ScheduleService {
         return "GenerateFlowFile_adapter";
       case "ingest_dimension_grammar":
       case "ingest_dimension_data":
-      case "ingest_all_grammar":
+      case "ingest_all_grammars":
       case "ingest_programwise_data":
       case "ingest_dimension_data":
       case "ingest_data":
