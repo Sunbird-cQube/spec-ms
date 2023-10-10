@@ -346,7 +346,15 @@ export class ScheduleService {
       case "nas_oracle":
       case "nishtha_oracle":
       case "pgi_oracle":
-        return "GenerateFlowFile_oracle";
+        return "GenerateFlowFile_oracle"; 
+      case 'Run Latest Code azure':
+        return 'ListAzure';
+      case 'Run Latest Code Oracle':
+        return 'GenerateFlowFile_oracle';
+      case 'Run Latest Code aws':
+        return 'ListS3Files';
+      case 'Run Latest Code local':
+        return 'Listlocal';
       default:
         return "default processor_group";
     }
