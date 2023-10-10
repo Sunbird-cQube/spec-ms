@@ -186,6 +186,11 @@ export class ScheduleService {
             case 'Run Latest Code Oracle':
                 return 'GenerateFlowFile_oracle';
                 break;
+            case 'Run Latest Code azure':
+                return 'ListAzure';
+ 
+
+ 
         }
     }
 }
