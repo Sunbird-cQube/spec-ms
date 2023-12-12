@@ -91,17 +91,11 @@ export class scheduleDto {
     program_name?: string
 }
 
-
-export class s3DTO {
+export class ProcessorDto{
     @ApiProperty()
-    scheduled_at?: string;
+    processor_group_name?: string;
     @ApiProperty()
-    scheduled_type: string;
+    state: string;
 }
 
-export class GetGrammar {
-    @ApiProperty()
-    grammar_type: string;
-    @ApiProperty()
-    grammar_name: string;
-}
+
