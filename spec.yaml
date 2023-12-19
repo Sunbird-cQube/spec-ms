@@ -201,6 +201,42 @@ paths:
           description: "Something went wrong"
           schema:
             $ref: "#/definitions/generic_error"
+            
+  /spec/change-state:
+    post:
+      tags:
+        - "spec"
+      summary: "Change the state of a processor group in NiFi"
+      description: "Change the state of a processor group in NiFi. It can either start the processor group or stop iy."
+      operationId: "changeState"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              processor_group_name:
+                type: "string"
+                example: "Run_adapters"
+              state:
+                type: "string"
+                example: "STOPPED"
+      responses:
+        200:
+          description: "Successfully changed the state"
+          schema:
+            type: "object"
+            properties:
+              message:
+                type: "string"
+                example: "changed the state of Run_adapters"
+        400:
+          description: "Something went wrong"
+          schema:
+            $ref: "#/definitions/generic_error"
 
 definitions:
   generic_error:

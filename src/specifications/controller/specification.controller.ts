@@ -11,19 +11,20 @@ import {
     specDimensionDTO,
     scheduleDto,
     specEventDTO,
-    s3DTO, GetGrammar
+    ProcessorDto
 } from '../dto/specData.dto';
 import {DatasetService} from '../service/dataset/dataset.service';
 import {ScheduleService} from '../service/schedule/schedule.service';
 import {ApiTags} from '@nestjs/swagger';
-import {Grammar} from '../service/grammar/grammar.service';
 import { ReadSchemaService } from '../service/read-schema/read-schema.service';
+import { ProcessorGroupStateService } from '../service/processor-group-state/processor-group-state.service';
 
 @ApiTags('spec-ms')
 @Controller('')
 export class SpecificationController {
     constructor(private dimensionService: DimensionService, private EventService: EventService, private datasetService: DatasetService,
-                private scheduleService: ScheduleService, private readJsonFiles: ReadSchemaService, private grammar: Grammar, private pipelineService: PipelineService) {
+                private scheduleService: ScheduleService, private readJsonFiles: ReadSchemaService, private pipelineService: PipelineService,
+                private processorStateService: ProcessorGroupStateService) {
     }
 
     @Get('/hello')
@@ -134,19 +135,18 @@ export class SpecificationController {
         }
     }
 
-    @Get('/grammar')
-    async getGrammar(@Query()getGrammar: GetGrammar, @Res() response: Response) {
+    @Post('/change-state')
+    async processorState(@Body() inputBody:ProcessorDto, @Res()response: Response) {
         try {
-            const result: any = await this.grammar.getGrammar(getGrammar);
+            const result: any = await this.processorStateService.changeProcessorGroupState(inputBody);
             if (result?.code == 400) {
                 response.status(400).send({"message": result.error});
             }
             else {
-                response.status(200).send({"schema": result.data.schema});
+                response.status(200).send({"message": result.message});
             }
         } catch (error) {
-            console.error('specification.controller.getGrammar: ', error);
-            throw new Error(error);
+            console.error('changeprocessorState: ', error);
         }
-    }
+    }   
 }
