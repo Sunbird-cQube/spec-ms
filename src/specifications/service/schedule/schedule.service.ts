@@ -322,6 +322,8 @@ export class ScheduleService {
         return "ListS3Files";
       case "onestep_dataingestion_local":
           return "Listlocal";
+      case "onestep_dataingestion_oracle":
+          return "GenerateFlowFile_oracle";
       case "data_moving_oracle":
       case "ingest_event_grammar":
         return "GenerateFlowFile_oracle";
