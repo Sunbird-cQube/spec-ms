@@ -364,6 +364,8 @@ export class ScheduleService {
       case "udise_azure":
       case "nas_azure":
         return "ListAzure";
+      case "stop_processor":
+        return "GenerateFlowFile_stop";
       default:
         return "default processor_group";
     }
