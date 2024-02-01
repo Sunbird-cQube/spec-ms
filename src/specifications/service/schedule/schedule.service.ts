@@ -322,10 +322,13 @@ export class ScheduleService {
         return "ListS3Files";
       case "onestep_dataingestion_local":
           return "Listlocal";
+      case "onestep_dataingestion_oracle":
+          return "GenerateFlowFile_oracle";
       case "data_moving_oracle":
       case "ingest_event_grammar":
         return "GenerateFlowFile_oracle";
       case "data_moving_azure":
+      case "onestep_dataingestion_azure":
         return "ListAzure";
       case "school_Infrastructure_aws":
       case "student_progression_aws":
@@ -357,6 +360,12 @@ export class ScheduleService {
         return 'ListS3Files';
       case 'Run Latest Code local':
         return 'Listlocal';
+      case "pm_poshan_azure":
+      case "udise_azure":
+      case "nas_azure":
+        return "ListAzure";
+      case "stop_processor":
+        return "GenerateFlowFile_stop";
       default:
         return "default processor_group";
     }
